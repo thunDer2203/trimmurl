@@ -21,12 +21,12 @@ const pathname = usePathname(); // Get the current route
         </Link>
    <ul className='flex gap-3 justify-center items-center text-white p-2'>
     <Link className={isActive('/') ? ' bg-cyan-800 p-4' : ''} href='/'><li>Home</li></Link>
-    <Link href='/contact' className={isActive('/contact') ? ' bg-cyan-800 p-4' : ''}><li>Contact Us</li></Link>
-    <Link href='/about' className={isActive('/about') ? ' bg-cyan-800 p-4' : ''}><li>About</li></Link>
+    <Link href='/' className={isActive('/contact') ? ' bg-cyan-800 p-4' : ''}><li>Contact Us</li></Link>
+    <Link href='/' className={isActive('/about') ? ' bg-cyan-800 p-4' : ''}><li>About</li></Link>
     <Link href='/shorten' className={isActive('/shorten') ? ' bg-cyan-800 p-4' : ''}><li>Shorten</li></Link>
     <li className='flex gap-2'>
         <Link href='/shorten'><button className='rounded-lg bg-cyan-800 shadow-lg p-1 cursor-pointer'>Try Now</button></Link>
-        <Link href='/github'><button className='rounded-lg bg-cyan-800 shadow-lg p-1 cursor-pointer'>GitHub</button></Link>
+        <Link href='https://github.com/thunDer2203'><button className='rounded-lg bg-cyan-800 shadow-lg p-1 cursor-pointer'>GitHub</button></Link>
     </li>
    </ul>
    </nav>

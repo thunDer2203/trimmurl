@@ -3,7 +3,7 @@ import clientPromise from "@/lib/mongodb";
 export async function POST(request) {
 
     const body=await request.json()
-    // console.log(body);
+    console.log("hello from server");
     const client= await clientPromise
     const db=client.db("trimmurl")
     const collection=db.collection("url")
