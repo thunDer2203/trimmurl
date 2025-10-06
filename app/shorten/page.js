@@ -36,9 +36,7 @@ const Shorten = () => {
                 "success":false})
                 seturl("")   
                 setshorturl("")
-                console.log(result)
-                alert(result.message)
-            
+               
             })
             .catch((error) => console.error(error));
     }
