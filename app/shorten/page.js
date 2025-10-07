@@ -1,12 +1,31 @@
 "use client"
 
+import copy from "@/public/copy.png";
+import check from "@/public/check.png";
 import React, { useState } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
+import { useRef } from "react";
+
+
 const Shorten = () => {
     const [url, seturl] = useState("")
     const [shorturl, setshorturl] = useState("")
     const [generated, setGenerated] = useState({})
+    const [imageSrc, setImageSrc] = useState(copy);
 
+    const ref=useRef(null);
+
+    const handleCopy = async (message) => {
+    // Copy text to clipboard
+      await navigator.clipboard.writeText(message); 
+    
+    // console.log(ref.current)
+      setImageSrc(check)
+      setTimeout(() => {
+        setImageSrc(copy)
+      }, 2000);
+    }
 
       const generate = () => {
         const myHeaders = new Headers();
@@ -60,8 +79,17 @@ const Shorten = () => {
                 <button onClick={generate} className='bg-cyan-800 rounded-lg shadow-lg p-3 py-1 my-3 font-bold text-white cursor-pointer'>Generate</button>
             </div>
 
-            {generated.success && <> <span className='font-bold text-lg'>Your Link </span><code><Link target="_blank" href={generated.content}>{generated.content}</Link> 
-                </code></>}
+            {generated.success && <> <span className='font-bold text-lg'>Your Link </span><code className="flex gap-1"><Link target="_blank" href={generated.content}>{generated.content}</Link> 
+                <span
+                          onClick={() => {
+                            handleCopy(generated.content);
+                          }}
+                          className="cursor-pointer mt-1 ml-1"
+                        >
+                          <Image src={imageSrc} width={15} height={10} ref={ref}  alt="copy icon"/>
+                        </span> 
+                        </code>
+                         </>}
                 {!generated.success && <> <span className='font-bold text-lg'> </span><code>{generated.content}
                 </code></>}
         </div>
