@@ -2,17 +2,31 @@
 
 import copy from "@/public/copy.png";
 import check from "@/public/check.png";
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { useRef } from "react";
-
+import { useRouter } from "next/navigation";
+import { useAuth } from "@/context/AuthContext";
+// import { protectedRoute } from "@/middleware/protectedRoute";
 
 const Shorten = () => {
     const [url, seturl] = useState("")
     const [shorturl, setshorturl] = useState("")
     const [generated, setGenerated] = useState({})
     const [imageSrc, setImageSrc] = useState(copy);
+    const {user, loading} = useAuth();
+    const Router = useRouter();
+    
+    useEffect(() => {
+            try{
+            if (!user) {
+              Router.replace("/login");
+            }
+          }catch(err){
+            console.log("User not authenticated");
+          }
+          }, [user, loading]);
 
     const ref=useRef(null);
 
@@ -26,16 +40,19 @@ const Shorten = () => {
         setImageSrc(copy)
       }, 2000);
     }
+    
+    
 
-      const generate = () => {
+      const generate = async () => {
+
         const myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
-
         const raw = JSON.stringify({
             "url": url,
-            "shorturl": shorturl
+            "shorturl": shorturl,
+            "username": user
         });
-
+        
         const requestOptions = {
             method: "POST",
             headers: myHeaders,
@@ -47,7 +64,7 @@ const Shorten = () => {
             .then((response) => response.json())
             .then((result) => {
                 if(result.message==='URL generated'){
-                setGenerated({"content":`${process.env.NEXT_PUBLIC_HOST}/${shorturl}`,
+                setGenerated({"content":`${process.env.NEXT_PUBLIC_HOST}/${user}/${shorturl}`,
                 "success":true})
                 }
                 else
@@ -76,7 +93,7 @@ const Shorten = () => {
                     className='px-4 py-2 focus:outline-cyan-800 rounded-md border-cyan-950 border-1 focus:outline-2 bg-white'
                     placeholder='Enter your preferred short URL text'
                     onChange={e => { setshorturl(e.target.value) }} />  
-                <button onClick={generate} className='bg-cyan-800 rounded-lg shadow-lg p-3 py-1 my-3 font-bold text-white cursor-pointer'>Generate</button>
+                <button disabled={user===""} onClick={generate} className='bg-cyan-800 rounded-lg shadow-lg p-3 py-1 my-3 font-bold text-white cursor-pointer'>Generate</button>
             </div>
 
             {generated.success && <> <span className='font-bold text-lg'>Your Link </span><code className="flex gap-1"><Link target="_blank" href={generated.content}>{generated.content}</Link> 
