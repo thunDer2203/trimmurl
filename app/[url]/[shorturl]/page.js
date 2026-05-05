@@ -1,7 +1,7 @@
 import { redirect } from "next/navigation"
 import clientPromise from "@/lib/mongodb"
 
-export default async function Page({ params }) {
+export default async function Re_direction({ params }) {
     const client= await clientPromise
     const db=client.db("trimmurl")
     const collection=db.collection("url")

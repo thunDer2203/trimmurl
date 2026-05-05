@@ -2,7 +2,7 @@
 import React, { useState } from 'react'
 import Link from 'next/link'
 
-const Page = () => {
+const SignIn = () => {
     const [message, setmessage] = useState("")
     async function handleSubmit(event){
         event.preventDefault();
@@ -53,4 +53,4 @@ const Page = () => {
   )
 }
 
-export default Page
+export default SignIn

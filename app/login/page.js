@@ -6,7 +6,7 @@ import { useAuth } from "@/context/AuthContext";
 import { set } from 'mongoose';
 
 
-const page = () => {
+const Login = () => {
     const [message, setmessage] = useState("")
     const {user,setUser} = useAuth();
     const router= useRouter();
@@ -67,4 +67,4 @@ const page = () => {
   )
 }
 
-export default page
+export default Login
