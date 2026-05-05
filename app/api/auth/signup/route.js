@@ -7,10 +7,10 @@ import { cookies } from "next/headers";
 
 export async function POST(request) {
     const body=await request.json()
-    console.log("hello from server");
     const client= await clientPromise
     const db=client.db("trimmurl")
     const collection=db.collection("User")
+    console.log("hello from server");
     try{
         let password=body.password;
         let email=body.email;
